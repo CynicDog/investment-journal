@@ -1,6 +1,6 @@
 # P — Everpure
 
-> Last reviewed: 2026-05-12 &nbsp;•&nbsp; Sector: Technology / Data infrastructure &nbsp;•&nbsp; Target: 10% &nbsp;•&nbsp; Daily DCA: $10
+> Status: CLOSED &nbsp;•&nbsp; Closed: 2026-05-19 &nbsp;•&nbsp; Sector: Technology / Data infrastructure &nbsp;•&nbsp; Last reviewed: 2026-05-12
 
 ## At a glance
 

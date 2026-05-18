@@ -1,20 +1,17 @@
-plan_version: 5
-adopted: 2026-05-12
+plan_version: 6
+adopted: 2026-05-19
 notes: |
-  6-position allocation, post-HLNE de-risk (2026-05-12).
+  6-position allocation, post-P (Everpure) close (2026-05-19).
 
-  HLNE reduced from 18% → 5% on weakening conviction: Hunterbrook short report
-  (R-2026-05-001) + Q4 2025 institutional outflows (R-2026-04-001) downgraded
-  HLNE from "highest conviction" to token stake pending the May 21 Q4 FY2026
-  call. $13/day freed redistributed:
-    - ETN +$6 (→ 20%) — promoted from thematic side-bet to co-core position on AI power infra thesis
-    - HALO +$2 (→ 20%) — following 2026-05-11 Q1 beat (+42% YoY rev, +43% royalty rev, $1B buyback, 3 new ENHANZE/Hypercon deals with Vertex/Oruka/GSK)
-    - IDCC +$2 (→ 15%)
-    - P +$2 (→ 10%) — increased speculative weight per scenario S-2026-05-001
-    - VOO +$1 (→ 30%, clean anchor)
+  P cleared early — AI data infra thesis not gaining conviction; replaced by
+  INTU (Intuit) at 7% as a quality SaaS compounder with deep moats (QuickBooks
+  network effects, tax data, Credit Karma). Scenario S-2026-05-001 superseded
+  by early exit. $10/day from P redistributed:
+    - INTU +$7 (→ 7%) — new position, SaaS / SMB fintech
+    - HALO +$2 (→ 22%) — following sustained co-core conviction post-Q1 beat
+    - VOO +$1 (→ 31%, clean anchor)
 
-  Co-core active positions are now HALO and ETN at 20% each. ETN dossier
-  thesis re-up due at next monthly review to match the new weight class.
+  Co-core active positions remain HALO and ETN at 22% and 20% respectively.
 
 dca:
   cadence: daily-weekday      # 5 fills per week
@@ -24,15 +21,15 @@ positions:
   - ticker: VOO
     name: Vanguard S&P 500 ETF
     sector: Index
-    target_pct: 30
-    dca_per_day_usd: 30
+    target_pct: 31
+    dca_per_day_usd: 31
     role: Broad market anchor
 
   - ticker: HALO
     name: Halozyme Therapeutics
     sector: Healthcare / Biotech
-    target_pct: 20
-    dca_per_day_usd: 20
+    target_pct: 22
+    dca_per_day_usd: 22
     role: Healthcare royalties (co-core)
 
   - ticker: ETN
@@ -49,12 +46,12 @@ positions:
     dca_per_day_usd: 15
     role: Patent licensing IP
 
-  - ticker: P
-    name: Everpure
-    sector: Technology / Data infrastructure
-    target_pct: 10
-    dca_per_day_usd: 10
-    role: "Speculation: AI data infra"
+  - ticker: INTU
+    name: Intuit Inc.
+    sector: Technology / SaaS
+    target_pct: 7
+    dca_per_day_usd: 7
+    role: SaaS compounder — SMB fintech + tax data moat
 
   - ticker: HLNE
     name: Hamilton Lane
@@ -71,3 +68,13 @@ closed_positions:
     final_dca_usd: 11
     reason: >-
       Position cleared; DCA redistributed to HLNE (+$3), HALO (+$3), IDCC (+$5).
+
+  - ticker: P
+    name: Everpure
+    closed_on: 2026-05-19
+    final_pct: 10
+    final_dca_usd: 10
+    reason: >-
+      Conviction shifted to quality SaaS (INTU). AI data infra thesis not gaining
+      evidence; scenario S-2026-05-001 time-gate superseded by early exit.
+      $10/day redistributed: INTU $7, HALO +$2, VOO +$1.
