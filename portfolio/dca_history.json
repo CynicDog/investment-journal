@@ -711,36 +711,84 @@
       "target_usd": 5.0,
       "price_usd": 87.61,
       "shares": 0.05707111060381235
+    },
+    {
+      "on_date": "2026-05-18",
+      "ticker": "VOO",
+      "executed": true,
+      "target_usd": 30.0,
+      "price_usd": 679.02,
+      "shares": 0.04418132013784572
+    },
+    {
+      "on_date": "2026-05-18",
+      "ticker": "HALO",
+      "executed": true,
+      "target_usd": 20.0,
+      "price_usd": 67.44,
+      "shares": 0.29655990510083036
+    },
+    {
+      "on_date": "2026-05-18",
+      "ticker": "ETN",
+      "executed": true,
+      "target_usd": 20.0,
+      "price_usd": 382.0,
+      "shares": 0.05235602094240838
+    },
+    {
+      "on_date": "2026-05-18",
+      "ticker": "IDCC",
+      "executed": true,
+      "target_usd": 15.0,
+      "price_usd": 263.85,
+      "shares": 0.05685048322910744
+    },
+    {
+      "on_date": "2026-05-18",
+      "ticker": "P",
+      "executed": true,
+      "target_usd": 10.0,
+      "price_usd": 77.02,
+      "shares": 0.12983640612827838
+    },
+    {
+      "on_date": "2026-05-18",
+      "ticker": "HLNE",
+      "executed": true,
+      "target_usd": 5.0,
+      "price_usd": 86.75,
+      "shares": 0.05763688760806916
     }
   ],
   "marks": {
     "ETN": {
-      "price_usd": 408.1,
-      "as_of": "2026-05-14"
+      "price_usd": 382.0,
+      "as_of": "2026-05-18"
     },
     "HALO": {
-      "price_usd": 69.21,
-      "as_of": "2026-05-14"
+      "price_usd": 67.44,
+      "as_of": "2026-05-18"
     },
     "HLNE": {
-      "price_usd": 87.61,
-      "as_of": "2026-05-14"
+      "price_usd": 86.75,
+      "as_of": "2026-05-18"
     },
     "IDCC": {
-      "price_usd": 269.31,
-      "as_of": "2026-05-14"
+      "price_usd": 263.85,
+      "as_of": "2026-05-18"
     },
     "MKL": {
       "price_usd": 1779.36,
       "as_of": "2026-05-01"
     },
     "VOO": {
-      "price_usd": 687.73,
-      "as_of": "2026-05-14"
+      "price_usd": 679.02,
+      "as_of": "2026-05-18"
     },
     "P": {
-      "price_usd": 83.8,
-      "as_of": "2026-05-14"
+      "price_usd": 77.02,
+      "as_of": "2026-05-18"
     }
   }
 }
