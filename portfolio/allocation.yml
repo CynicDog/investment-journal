@@ -1,13 +1,13 @@
-plan_version: 6
-adopted: 2026-05-19
+plan_version: 7
+adopted: 2026-05-25
 notes: |
-  6-position allocation, post-P (Everpure) close (2026-05-19).
+  6-position allocation, post-P (Everpure) close.
 
-  P cleared early — AI data infra thesis not gaining conviction; replaced by
-  INTU (Intuit) at 7% as a quality SaaS compounder with deep moats (QuickBooks
-  network effects, tax data, Credit Karma). Scenario S-2026-05-001 superseded
-  by early exit. $10/day from P redistributed:
-    - INTU +$7 (→ 7%) — new position, SaaS / SMB fintech
+  P cleared 2026-05-19 — AI data infra thesis not gaining conviction. INTU
+  (Intuit) was the planned replacement but was never entered. Actual replacement
+  is XYL (Xylem Inc.) at 7% / $7/day, opened 2026-05-25. $10/day from P
+  redistributed:
+    - XYL +$7 (→ 7%) — water technology / infrastructure compounder
     - HALO +$2 (→ 22%) — following sustained co-core conviction post-Q1 beat
     - VOO +$1 (→ 31%, clean anchor)
 
@@ -46,12 +46,12 @@ positions:
     dca_per_day_usd: 15
     role: Patent licensing IP
 
-  - ticker: INTU
-    name: Intuit Inc.
-    sector: Technology / SaaS
+  - ticker: XYL
+    name: Xylem Inc.
+    sector: Industrials / Water Technology
     target_pct: 7
     dca_per_day_usd: 7
-    role: SaaS compounder — SMB fintech + tax data moat
+    role: Water infrastructure compounder — pumps, treatment, smart metering
 
   - ticker: HLNE
     name: Hamilton Lane
@@ -75,6 +75,6 @@ closed_positions:
     final_pct: 10
     final_dca_usd: 10
     reason: >-
-      Conviction shifted to quality SaaS (INTU). AI data infra thesis not gaining
-      evidence; scenario S-2026-05-001 time-gate superseded by early exit.
-      $10/day redistributed: INTU $7, HALO +$2, VOO +$1.
+      AI data infra thesis not gaining conviction; scenario S-2026-05-001
+      time-gate superseded by early exit. $10/day redistributed: XYL $7,
+      HALO +$2, VOO +$1.
