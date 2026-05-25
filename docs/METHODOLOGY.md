@@ -22,8 +22,8 @@ How the system is wired. If you change the math, the schemas, or the workflow sh
 - `models/` — Pydantic models that validate inputs (yaml, dossier markdown).
 - `render/` — pure functions that turn validated models into markdown for issue bodies + dashboards.
 
-Workflows that author content (`weekly-review.yml`, `earnings-watcher.yml`, `earnings-recap.yml`, `dca-tracker.yml`, `thesis-review.yml`, `risks-index-sync.yml`, `update-dashboards.yml`) load the DSL via `uv sync --frozen` and either:
-- call a renderer directly (deterministic case — dashboards, risks index, dca-tracker), or
+Workflows that author content (`weekly-review.yml`, `earnings-watcher.yml`, `earnings-recap.yml`, `thesis-review.yml`, `risks-index-sync.yml`, `update-dashboards.yml`) load the DSL via `uv sync --frozen` and either:
+- call a renderer directly (deterministic case — dashboards, risks index), or
 - emit markdown that **must conform to the model's documented shape** (Claude case — weekly review, earnings recap). Doc anchors in `docs/PROMPTS.md` instruct Claude on the shape, but they don't yet validate Claude's output.
 
 `tests/test_models.py` smoke-tests every model and every renderer.
@@ -44,17 +44,6 @@ Workflows that author content (`weekly-review.yml`, `earnings-watcher.yml`, `ear
    - Closes the corresponding child issue.
 6. The markdown file is **never deleted**. Resolved entries stay in `risks/` for history; the Risks Index only displays the 10 most recently resolved.
 
-## DCA confirmation tracking
-
-`dca-tracker.yml` runs Sunday 22:00 UTC (~Mon 07 KST):
-
-1. Closes any still-open `dca-tracker` issue from prior weeks (with a tally comment `Auto-closing at end of week. Tally: N/M confirmed.`).
-2. Opens a fresh weekly issue titled `DCA tracker: week of YYYY-MM-DD` containing five Mon–Fri checkboxes (the body is built from `DCATracker.fresh(monday)` rendered via `render_dca_tracker`).
-
-Closed weekly issues are the journal of what filled. The weekly review reads them to populate `WeeklyReview.dca`.
-
-A bullet is **never** ticked by automation. The `issue-checkbox-tick.yml` workflow explicitly bails out for `dca-tracker`-labeled issues.
-
 ## Dashboards
 
 `scripts/render_dashboards.py` reads `allocation.yml` via the DSL and writes `portfolio/dashboards/dca-flow.md` — a sankey-beta diagram grouped by sector (`Daily $X → sector → ticker`). That's the only file it writes.
@@ -66,14 +55,13 @@ A bullet is **never** ticked by automation. The `issue-checkbox-tick.yml` workfl
 | Workflow | Trigger | Reads | Writes |
 |---|---|---|---|
 | `update-dashboards.yml` | push to `portfolio/**` or `scripts/render_dashboards.py` | `allocation.yml` | `dashboards/dca-flow.md`, commits if changed |
-| `dca-tracker.yml` | Sun 22 UTC + dispatch | open dca-tracker issues | closes prior, opens new tracker issue |
 | `thesis-review.yml` | 1st of month 22 UTC + dispatch | `allocation.yml`, existing thesis-review issues | one issue per ticker for the just-completed month (idempotent) |
-| `weekly-review.yml` | Fri 21:30 UTC + dispatch | full repo + open risk issues + closed dca-tracker issues + web | new weekly-review issue; new `risks/R-*.md` files (committed by the workflow) |
+| `weekly-review.yml` | Fri 21:30 UTC + dispatch | full repo + open risk issues + web | new weekly-review issue; new `risks/R-*.md` files (committed by the workflow) |
 | `earnings-watcher.yml` | daily 13 UTC + dispatch | tickers + open earnings issues + open risk issues + web | new pre-call earnings issues; `dashboards/upcoming-earnings.md`; optionally `risks/R-*.md` |
 | `earnings-recap.yml` | daily 13:30 UTC + dispatch | open earnings issues past their date + web | `### Recap` comment on the issue; ticks `Earnings released` / `Recap published`; optionally `risks/R-*.md` |
 | `risks-index-sync.yml` | push to `risks/R-*.md` + dispatch | all `risks/R-*.md` | Risks Index issue body (creates+pins on first run) |
 | `claude-mention.yml` | `@claude` in issue/PR | as Claude reads | issue/PR comments |
-| `issue-checkbox-tick.yml` | edit/comment on `auto-tick`-labeled issue | issue body | flipped `[ ] → [x]`, one summary comment; never on `dca-tracker` |
+| `issue-checkbox-tick.yml` | edit/comment on `auto-tick`-labeled issue | issue body | flipped `[ ] → [x]`, one summary comment |
 
 ## What we explicitly do not do
 

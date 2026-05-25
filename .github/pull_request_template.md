@@ -19,4 +19,3 @@
 
 - [ ] `python scripts/render_dashboards.py` runs cleanly locally.
 - [ ] No accidental edit inside dashboard `<!-- ... -->` auto-blocks.
-- [ ] Existing `dca-tracker` issues are not affected by this change.

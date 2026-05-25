@@ -5,8 +5,7 @@ Calls 5 AV endpoints (OVERVIEW, BALANCE_SHEET, INCOME_STATEMENT, CASH_FLOW, EARN
 computes all 10 metric keys expected by score_candidate(), and prints a JSON result
 ready to be written back into portfolio/watchlist.yml.
 
-Uses ALPHA_VANTAGE_API_KEY_2 — a dedicated key separate from the price-fetching key
-(ALPHA_VANTAGE_API_KEY) used in record_dca_fills.py, to avoid rate-limit conflicts.
+Uses ALPHA_VANTAGE_API_KEY_2 — a dedicated key to avoid rate-limit conflicts.
 
 AV free-tier limits: 25 requests/day, 500/month, ~5 req/min.
 This script uses 5 calls per ticker; a 12-second sleep enforces the per-minute cap.

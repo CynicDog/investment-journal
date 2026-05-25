@@ -15,11 +15,6 @@ Inputs you must read before writing anything:
 - `portfolio/allocation.yml` — target weights, DCA per ticker.
 - `portfolio/positions/*.md` — full dossiers.
 - `portfolio/dashboards/dca-flow.md` — already refreshed by the workflow before you ran.
-- Closed `dca-tracker` issues (last 4 weeks):
-  ```bash
-  gh issue list --label dca-tracker --state closed --limit 6 --json number,title,body,closedAt
-  ```
-  Count `- [x]` lines per closed issue body to get fills-per-week.
 - Open `risk` issues (so you don't duplicate-file an existing one):
   ```bash
   gh issue list --label risk --state open --limit 30 --json number,title,body
@@ -65,12 +60,6 @@ Body must follow this shape (mirrors `WeeklyReview` + `render_weekly_review`):
 # Weekly review {ISO-week}
 
 _Generated {YYYY-MM-DD}._
-
-## DCA confirmation
-
-- This week: **{N}/5** days confirmed at Toss.
-- Trailing 4 weeks: {n1}/5, {n2}/5, {n3}/5, {n4}/5.
-- Notes: {only if anything notable; omit otherwise}
 
 ## Per-position update
 
@@ -279,7 +268,6 @@ You are reviewing one issue (`$ISSUE_NUMBER`). Goal: tick `[ ] → [x]` only for
 
 Hard rules:
 
-- **Bail out immediately** if the issue carries the label `dca-tracker`. Those represent real money at the user's broker — only the user confirms.
 - **Never tick subjective items.** Examples: "Thesis-impact assessed", "Action taken", "Allocation in line with target", anything requiring human judgment.
 - **Never untick** (`[x] → [ ]`).
 - **Never edit any file.** This workflow only edits issue text.
@@ -288,8 +276,7 @@ Hard rules:
 Steps:
 
 1. `gh issue view "$ISSUE_NUMBER" --json body,title,labels,comments`.
-2. If labels include `dca-tracker` → exit silently.
-3. For each `- [ ]` line, classify auto-tickable vs subjective:
+2. For each `- [ ]` line, classify auto-tickable vs subjective:
    - `[ ] Earnings released` — verifiable if earnings date in body has passed AND a primary press release exists.
    - `[ ] Recap published` — verifiable if a comment with `### Recap` exists on the issue.
    - `[ ] 10-Q filed` — verifiable from SEC EDGAR.

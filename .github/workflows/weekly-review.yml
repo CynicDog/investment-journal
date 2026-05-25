@@ -33,19 +33,6 @@ jobs:
         id: week
         run: echo "tag=$(date -u +'%G-W%V')" >> "$GITHUB_OUTPUT"
 
-      - name: Close open dca-tracker issue before review reads it
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-        run: |
-          for n in $(gh issue list -R "$REPO" --label dca-tracker --state open --json number -q '.[].number'); do
-            body=$(gh issue view "$n" -R "$REPO" --json body -q .body)
-            ticked=$(printf '%s\n' "$body" | grep -c '^- \[x\]' || true)
-            total=$(printf  '%s\n' "$body" | grep -c '^- \[' || true)
-            gh issue comment "$n" -R "$REPO" --body "Closing before weekly review tally. Confirmed: ${ticked}/${total}."
-            gh issue close "$n" -R "$REPO" --reason completed
-          done
-
       - name: Run Claude weekly review
         uses: anthropics/claude-code-action@v1
         env:
@@ -64,8 +51,6 @@ jobs:
               - portfolio/allocation.yml
               - portfolio/positions/*.md
               - portfolio/dashboards/dca-flow.md
-              - closed dca-tracker issues (last 4 weeks) via:
-                  gh issue list --label dca-tracker --state closed --limit 6 --json number,title,body,closedAt
 
             For each NEW risk you surface, call:
               uv run python scripts/file_a_risk.py \

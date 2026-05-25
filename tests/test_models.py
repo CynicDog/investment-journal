@@ -8,15 +8,11 @@ from pydantic import ValidationError
 
 from investment_journal import (
     Allocation,
-    DCAFill,
-    DCAHistory,
-    DCATracker,
     DecisionGate,
     Dossier,
     EarningsEvent,
     HorizonPhase,
     HorizonPlan,
-    Mark,
     Risk,
     Scenario,
     ScreenResult,
@@ -30,14 +26,10 @@ from investment_journal import (
 from investment_journal.models.earnings_event import EarningsRecap
 from investment_journal.models.weekly_review import (
     Catalyst,
-    DCASnapshot,
     PositionUpdate,
 )
 from investment_journal.render import (
     render_capital_flow_sankey,
-    render_dca_pnl,
-    render_dca_pnl_issue_block,
-    render_dca_tracker,
     render_earnings_event,
     render_horizon_review,
     render_risk_issue,
@@ -99,96 +91,10 @@ def test_risk_open_and_resolved() -> None:
         )
 
 
-def test_dca_tracker_must_start_on_monday() -> None:
-    DCATracker.fresh(date(2026, 4, 27))  # Monday
-    with pytest.raises(ValidationError):
-        DCATracker.fresh(date(2026, 4, 28))  # Tuesday
-
-
-def test_dca_fill_executed_requires_price_and_shares() -> None:
-    DCAFill(
-        on_date=date(2026, 4, 21),
-        ticker="VOO",
-        executed=True,
-        target_usd=32.0,
-        price_usd=534.10,
-        shares=32.0 / 534.10,
-    )
-    DCAFill(on_date=date(2026, 4, 21), ticker="VOO", executed=False, target_usd=32.0)
-    with pytest.raises(ValidationError):
-        DCAFill(on_date=date(2026, 4, 21), ticker="VOO", executed=True, target_usd=32.0)
-    with pytest.raises(ValidationError):
-        DCAFill(
-            on_date=date(2026, 4, 21),
-            ticker="VOO",
-            executed=False,
-            target_usd=32.0,
-            price_usd=534.10,
-            shares=0.06,
-        )
-
-
-def test_dca_history_aggregations_and_render() -> None:
-    h = DCAHistory()
-    monday = date(2026, 4, 20)
-    # Two executed VOO fills + one missed day.
-    h.upsert(
-        DCAFill(
-            on_date=monday,
-            ticker="VOO",
-            executed=True,
-            target_usd=32.0,
-            price_usd=500.0,
-            shares=32.0 / 500.0,
-        )
-    )
-    h.upsert(
-        DCAFill(
-            on_date=date(2026, 4, 21),
-            ticker="VOO",
-            executed=True,
-            target_usd=32.0,
-            price_usd=400.0,
-            shares=32.0 / 400.0,
-        )
-    )
-    h.upsert(
-        DCAFill(
-            on_date=date(2026, 4, 22), ticker="VOO", executed=False, target_usd=32.0
-        )
-    )
-    # Idempotent upsert (overwrites the missed-day entry, no duplicate).
-    h.upsert(
-        DCAFill(
-            on_date=date(2026, 4, 22), ticker="VOO", executed=False, target_usd=32.0
-        )
-    )
-    assert sum(1 for f in h.fills if f.on_date == date(2026, 4, 22)) == 1
-    # Cost basis = 32 + 32; shares = 32/500 + 32/400.
-    assert h.cost_basis("VOO") == pytest.approx(64.0)
-    assert h.shares_held("VOO") == pytest.approx(32.0 / 500.0 + 32.0 / 400.0)
-    h.marks["VOO"] = Mark(price_usd=600.0, as_of=date(2026, 4, 25))
-    pnl_abs, pnl_pct = h.unrealized_pnl("VOO", 600.0)
-    assert pnl_abs > 0
-    assert pnl_pct > 0
-    out = render_dca_pnl(h, today=date(2026, 4, 26))
-    assert "DCA P&L" in out
-    assert "VOO" in out
-    block = render_dca_pnl_issue_block(h, week_of=monday, today=date(2026, 4, 26))
-    assert "<!-- pnl-start -->" in block
-    assert "<!-- pnl-end -->" in block
-    # In-week fills appear; out-of-week fill is filtered (none here, but check date ordering).
-    assert "2026-04-20" in block
-    assert "2026-04-22" in block
-
 
 def test_render_smoke() -> None:
     a = Allocation.load(REPO / "portfolio" / "allocation.yml")
     assert "sankey-beta" in render_capital_flow_sankey(a)
-
-    t = DCATracker.fresh(date(2026, 4, 27))
-    out = render_dca_tracker(t)
-    assert "Mon 2026-04-27" in out
 
     r = Risk(
         id="R-2026-04-001",
@@ -206,7 +112,6 @@ def test_render_smoke() -> None:
     wr = WeeklyReview(
         iso_week="2026-W17",
         generated_on=date(2026, 4, 26),
-        dca=DCASnapshot(this_week=4, trailing_4w=[5, 5, 4, 5]),
         per_position={
             "VOO": PositionUpdate(
                 ticker="VOO",
@@ -223,7 +128,6 @@ def test_render_smoke() -> None:
     )
     out = render_weekly_review(wr, {r.id: r})
     assert "Weekly review 2026-W17" in out
-    assert "4/5" in out
 
     tr = ThesisReview(
         ticker="HALO",

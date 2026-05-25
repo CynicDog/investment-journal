@@ -1,6 +1,5 @@
 """Issue body renderers: model → GitHub issue markdown."""
 
-from investment_journal.models.dca_tracker import DCATracker
 from investment_journal.models.earnings_event import EarningsEvent
 from investment_journal.models.horizon import HorizonPlan
 from investment_journal.models.risk import Risk
@@ -126,17 +125,9 @@ def render_weekly_review(
         "",
         f"_Generated {wr.generated_on.isoformat()}._",
         "",
-        "## DCA confirmation",
+        "## Per-position update",
         "",
-        f"- This week: **{wr.dca.this_week}/5** days confirmed at Toss.",
     ]
-    if wr.dca.trailing_4w:
-        trailing = ", ".join(f"{n}/5" for n in wr.dca.trailing_4w)
-        lines.append(f"- Trailing 4 weeks: {trailing}.")
-    if wr.dca.notes:
-        lines.append(f"- Notes: {wr.dca.notes}")
-
-    lines += ["", "## Per-position update", ""]
     for ticker, upd in wr.per_position.items():
         lines += [f"### {ticker}", ""]
         if upd.news_bullets:
@@ -288,34 +279,6 @@ def render_earnings_event(e: EarningsEvent) -> str:
                 lines.append(f"  - {s}")
         lines.append("")
     lines += ["---", DISCLAIMER]
-    return "\n".join(lines)
-
-
-def render_dca_tracker(t: DCATracker, allocation_table: str | None = None) -> str:
-    lines = [
-        f"DCA confirmation tracker for the week of **{t.week_of.isoformat()}**.",
-        "",
-        "Tick each day after Toss confirms the daily DCA fill. If a day is missed (Toss outage, market holiday, manual skip), leave it unchecked.",
-        "",
-    ]
-    for tick in t.ticks:
-        lines.append(
-            _checkbox(
-                f"{tick.weekday} {tick.on_date.isoformat()} — DCA executed at Toss",
-                tick.confirmed,
-            )
-        )
-    lines.append("")
-    if allocation_table:
-        lines += [
-            "---",
-            "",
-            "Daily target split (per `portfolio/allocation.yml`):",
-            "",
-            allocation_table,
-            "",
-        ]
-    lines += [DISCLAIMER]
     return "\n".join(lines)
 
 

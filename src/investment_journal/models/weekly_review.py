@@ -1,4 +1,4 @@
-"""Weekly review issue: per-position update + DCA tally + catalysts + risks delta."""
+"""Weekly review issue: per-position update + catalysts + risks delta."""
 
 from datetime import date
 from typing import Literal
@@ -31,23 +31,9 @@ class Catalyst(BaseModel):
     issue_link: str | None = None
 
 
-class DCASnapshot(BaseModel):
-    this_week: int = Field(ge=0, le=5)
-    trailing_4w: list[int] = Field(min_length=0, max_length=4)
-    notes: str = ""
-
-    @model_validator(mode="after")
-    def _bounds(self) -> "DCASnapshot":
-        for n in self.trailing_4w:
-            if not 0 <= n <= 5:
-                raise ValueError(f"trailing_4w entries must be 0..5, got {n}")
-        return self
-
-
 class WeeklyReview(BaseModel):
     iso_week: str = Field(pattern=r"^\d{4}-W\d{2}$")
     generated_on: date
-    dca: DCASnapshot
     per_position: dict[str, PositionUpdate]
     catalysts_30d: list[Catalyst] = Field(default_factory=list)
     risks_surfaced: list[str] = Field(
