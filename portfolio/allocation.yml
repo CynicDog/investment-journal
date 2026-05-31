@@ -1,64 +1,62 @@
-plan_version: 7
-adopted: 2026-05-25
+plan_version: 8
+adopted: 2026-05-31
 notes: |
-  6-position allocation, post-P (Everpure) close.
+  ETF-first pivot. Cleared HALO, ETN, XYL, HLNE. Retaining VOO (35%) + IDCC (10%)
+  from prior plan; adding IGV (tech/software, 20%), VXUS (international, 20%),
+  SCHD (quality/dividend, 15%).
 
-  P cleared 2026-05-19 — AI data infra thesis not gaining conviction. INTU
-  (Intuit) was the planned replacement but was never entered. Actual replacement
-  is XYL (Xylem Inc.) at 7% / $7/day, opened 2026-05-25. $10/day from P
-  redistributed:
-    - XYL +$7 (→ 7%) — water technology / infrastructure compounder
-    - HALO +$2 (→ 22%) — following sustained co-core conviction post-Q1 beat
-    - VOO +$1 (→ 31%, clean anchor)
-
-  Co-core active positions remain HALO and ETN at 22% and 20% respectively.
+  Buy plan (3 phases):
+    Phase 1 — Exit: sell HALO, ETN, XYL, HLNE via market order this week.
+    Phase 2 — Deploy proceeds: Conditional Purchase at -2% dip for IGV, VXUS, SCHD;
+      -3% for IDCC top-ups. Complete within 4 weeks; buy at market if not triggered.
+    Phase 3 — Steady state: weekly DCA $500/week (Monday) per weights below.
+      Exception: IDCC stays on daily Conditional Purchase at -3%.
 
 dca:
-  cadence: daily-weekday      # 5 fills per week
+  cadence: daily-weekday      # logical cadence; actual execution per buy plan above
   total_per_day_usd: 100
 
 positions:
   - ticker: VOO
     name: Vanguard S&P 500 ETF
     sector: Index
-    target_pct: 31
-    dca_per_day_usd: 31
-    role: Broad market anchor
+    target_pct: 35
+    dca_per_day_usd: 35
+    role: Broad market beta anchor
+    dividend_yield_pct: 1.3
+    div_frequency: quarterly
 
-  - ticker: HALO
-    name: Halozyme Therapeutics
-    sector: Healthcare / Biotech
-    target_pct: 22
-    dca_per_day_usd: 22
-    role: Healthcare royalties (co-core)
-
-  - ticker: ETN
-    name: Eaton Corp
-    sector: Industrials / Electrical
+  - ticker: IGV
+    name: iShares Expanded Tech-Software Sector ETF
+    sector: Technology
     target_pct: 20
     dca_per_day_usd: 20
-    role: AI power infrastructure (co-core)
+    role: Tech/software growth factor tilt
+
+  - ticker: VXUS
+    name: Vanguard Total International Stock ETF
+    sector: Index
+    target_pct: 20
+    dca_per_day_usd: 20
+    role: Ex-US geo diversification (developed + EM)
+    dividend_yield_pct: 3.0
+    div_frequency: quarterly
+
+  - ticker: SCHD
+    name: Schwab US Dividend Equity ETF
+    sector: Index
+    target_pct: 15
+    dca_per_day_usd: 15
+    role: Quality/dividend/value factor — counterweight to IGV growth concentration
+    dividend_yield_pct: 3.5
+    div_frequency: quarterly
 
   - ticker: IDCC
     name: InterDigital
     sector: Technology / IP licensing
-    target_pct: 15
-    dca_per_day_usd: 15
-    role: Patent licensing IP
-
-  - ticker: XYL
-    name: Xylem Inc.
-    sector: Industrials / Water Technology
-    target_pct: 7
-    dca_per_day_usd: 7
-    role: Water infrastructure compounder — pumps, treatment, smart metering
-
-  - ticker: HLNE
-    name: Hamilton Lane
-    sector: Financials / Asset management
-    target_pct: 5
-    dca_per_day_usd: 5
-    role: Private markets — de-risked pending 2026-05-21 Q4 FY2026 call
+    target_pct: 10
+    dca_per_day_usd: 10
+    role: Patent licensing royalty anchor
 
 closed_positions:
   - ticker: MKL
@@ -78,3 +76,38 @@ closed_positions:
       AI data infra thesis not gaining conviction; scenario S-2026-05-001
       time-gate superseded by early exit. $10/day redistributed: XYL $7,
       HALO +$2, VOO +$1.
+
+  - ticker: HALO
+    name: Halozyme Therapeutics
+    closed_on: 2026-05-31
+    final_pct: 22
+    final_dca_usd: 22
+    reason: >-
+      ETF-first pivot. Proceeds redeployed into IGV, VXUS, SCHD.
+
+  - ticker: ETN
+    name: Eaton Corp
+    closed_on: 2026-05-31
+    final_pct: 20
+    final_dca_usd: 20
+    reason: >-
+      ETF-first pivot. AI power infra exposure captured broadly via IGV/VOO.
+      Proceeds redeployed into IGV, VXUS, SCHD.
+
+  - ticker: XYL
+    name: Xylem Inc.
+    closed_on: 2026-05-31
+    final_pct: 7
+    final_dca_usd: 7
+    reason: >-
+      ETF-first pivot. Water infrastructure thesis not core enough for single-stock
+      slot. Proceeds redeployed into VXUS, SCHD.
+
+  - ticker: HLNE
+    name: Hamilton Lane
+    closed_on: 2026-05-31
+    final_pct: 5
+    final_dca_usd: 5
+    reason: >-
+      ETF-first pivot. Private markets exposure captured broadly via VOO/VXUS.
+      Proceeds redeployed into VOO, SCHD.
