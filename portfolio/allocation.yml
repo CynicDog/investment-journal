@@ -1,15 +1,11 @@
-plan_version: 9
-adopted: 2026-05-31
+plan_version: 10
+adopted: 2026-06-01
 notes: |
-  ETF-first pivot (v8) + IDCC conviction raise (v9). Increased IDCC 10→18%;
-  funded by VOO -4%, IGV -2%, SCHD -2%. VXUS unchanged.
+  Dropped SCHD (too conservative); redistributed 13% to IGV (+7) and IDCC (+6).
+  IGV 18→25%, IDCC 18→24%. VOO and VXUS unchanged.
 
-  Buy plan (3 phases):
-    Phase 1 — Exit: sell HALO, ETN, XYL, HLNE via market order this week.
-    Phase 2 — Deploy proceeds: Conditional Purchase at -2% dip for IGV, VXUS, SCHD;
-      -3% for IDCC top-ups. Complete within 4 weeks; buy at market if not triggered.
-    Phase 3 — Steady state: weekly DCA $500/week (Monday) per weights below.
-      Exception: IDCC stays on daily Conditional Purchase at -3%.
+  Buy plan: steady-state weekly DCA $500/week (Monday) per weights below.
+  Exception: IDCC stays on daily Conditional Purchase at -3%.
 
 dca:
   cadence: daily-weekday      # logical cadence; actual execution per buy plan above
@@ -28,8 +24,8 @@ positions:
   - ticker: IGV
     name: iShares Expanded Tech-Software Sector ETF
     sector: Technology
-    target_pct: 18
-    dca_per_day_usd: 18
+    target_pct: 25
+    dca_per_day_usd: 25
     role: Tech/software growth factor tilt
 
   - ticker: VXUS
@@ -41,20 +37,11 @@ positions:
     dividend_yield_pct: 3.0
     div_frequency: quarterly
 
-  - ticker: SCHD
-    name: Schwab US Dividend Equity ETF
-    sector: Index
-    target_pct: 13
-    dca_per_day_usd: 13
-    role: Quality/dividend/value factor — counterweight to IGV growth concentration
-    dividend_yield_pct: 3.5
-    div_frequency: quarterly
-
   - ticker: IDCC
     name: InterDigital
     sector: Technology / IP licensing
-    target_pct: 18
-    dca_per_day_usd: 18
+    target_pct: 24
+    dca_per_day_usd: 24
     role: Patent licensing royalty anchor
 
 closed_positions:
@@ -110,3 +97,12 @@ closed_positions:
     reason: >-
       ETF-first pivot. Private markets exposure captured broadly via VOO/VXUS.
       Proceeds redeployed into VOO, SCHD.
+
+  - ticker: SCHD
+    name: Schwab US Dividend Equity ETF
+    closed_on: 2026-06-01
+    final_pct: 13
+    final_dca_usd: 13
+    reason: >-
+      Too conservative for current risk appetite. 13% redistributed to IGV (+7)
+      and IDCC (+6).

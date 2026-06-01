@@ -9,11 +9,10 @@ config:
     showValues: true
 ---
 sankey-beta
-Daily $100,Index,64
-Daily $100,Technology,36
+Daily $100,Index,51
+Daily $100,Technology,49
 Index,VOO,31
 Index,VXUS,20
-Index,SCHD,13
-Technology,IGV,18
-Technology,IDCC,18
+Technology,IGV,25
+Technology,IDCC,24
 ```
