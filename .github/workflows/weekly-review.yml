@@ -1,9 +1,6 @@
 name: Weekly review
 
 on:
-  schedule:
-    # Friday 21:30 UTC (~16:30 ET, post US-close)
-    - cron: "30 21 * * 5"
   workflow_dispatch:
 
 permissions:

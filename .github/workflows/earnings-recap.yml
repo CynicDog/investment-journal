@@ -1,8 +1,6 @@
 name: Earnings recap
 
 on:
-  schedule:
-    - cron: "30 13 * * *"
   workflow_dispatch:
     inputs:
       issue_number:

@@ -4,13 +4,6 @@ name: Risks index sync
 # Also creates the Risks Index issue (and pins it) on first run.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "risks/R-*.md"
-      - "src/investment_journal/render/issue_body.py"
-      - "src/investment_journal/models/risk.py"
-      - "scripts/render_risks_index.py"
   workflow_dispatch:
 
 permissions:

@@ -1,13 +1,6 @@
 name: Update dashboards
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "portfolio/allocation.yml"
-      - "portfolio/trades.csv"
-      - "portfolio/positions/**"
-      - "scripts/render_dashboards.py"
   workflow_dispatch:
 
 permissions:

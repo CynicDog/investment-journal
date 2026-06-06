@@ -1,9 +1,6 @@
 name: Annual horizon review
 
 on:
-  schedule:
-    # May 3rd at 22:00 UTC — anniversary of horizon plan started_on (2026-05-03)
-    - cron: "0 22 3 5 *"
   workflow_dispatch:
 
 permissions:

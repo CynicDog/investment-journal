@@ -7,8 +7,6 @@ name: Monthly thesis review opener
 # workflow on the same day is a no-op for any ticker already covered.
 
 on:
-  schedule:
-    - cron: "0 22 1 * *"
   workflow_dispatch:
     inputs:
       month:

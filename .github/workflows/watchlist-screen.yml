@@ -1,9 +1,6 @@
 name: Watchlist quality screen
 
 on:
-  schedule:
-    # 1st of every month at 23:00 UTC
-    - cron: "0 23 1 * *"
   workflow_dispatch:
 
 permissions:
